@@ -1,0 +1,20 @@
+<h1><%= @trainer.name %></h1>
+<p>Hometown: <%= @trainer.hometown %></p>
+
+<h2 class="h4">Team</h2>
+<%# Each team member links to the Pokémon's own page %>
+<div class="row row-cols-2 row-cols-md-6 g-3">
+  <% @team_members.each do |member| %>
+    <div class="col">
+      <div class="card text-center h-100">
+        <%= image_tag member.pokemon.image_url, alt: member.pokemon.name, class: "card-img-top" if member.pokemon.image_url.present? %>
+        <div class="card-body">
+          <%= link_to member.nickname, pokemon_path(member.pokemon), class: "stretched-link" %>
+          <p class="text-muted mb-0"><%= member.pokemon.name.capitalize %> &middot; Lv. <%= member.level %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<p class="mt-4"><%= link_to "Back to all trainers", trainers_path %></p>

@@ -1,0 +1,41 @@
+<h1><%= @pokemon.name.capitalize %> <small class="text-muted">#<%= @pokemon.pokedex_number %></small></h1>
+
+<div class="row">
+  <div class="col-12 col-md-4 text-center">
+    <%= image_tag @pokemon.image_url, alt: @pokemon.name, class: "img-fluid" if @pokemon.image_url.present? %>
+  </div>
+
+  <div class="col-12 col-md-8">
+    <%# Pokémon attributes. The API gives height in decimetres and weight in hectograms, so divide by 10. %>
+    <ul class="list-unstyled">
+      <li><strong>Height:</strong> <%= @pokemon.height / 10.0 %> m</li>
+      <li><strong>Weight:</strong> <%= @pokemon.weight / 10.0 %> kg</li>
+      <li><strong>Base experience:</strong> <%= @pokemon.base_experience %></li>
+    </ul>
+
+    <%# Associated data: types, each linking to that type's page %>
+    <h2 class="h5">Types</h2>
+    <p>
+      <% @pokemon.element_types.each do |element_type| %>
+        <%= link_to element_type.name.capitalize, element_type_path(element_type), class: "badge bg-secondary text-decoration-none" %>
+      <% end %>
+    </p>
+
+    <%# Associated data: trainers who have this Pokémon on their team (only shown if there are any) %>
+    <h2 class="h5">Trainers with this Pokémon</h2>
+    <% if @pokemon.team_members.any? %>
+      <ul>
+        <% @pokemon.team_members.includes(:trainer).each do |member| %>
+          <li>
+            <%= link_to member.trainer.name, trainer_path(member.trainer) %>
+            as "<%= member.nickname %>" (level <%= member.level %>)
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No trainer has picked this Pokémon yet.</p>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to "Back to all Pokémon", pokemons_path %>

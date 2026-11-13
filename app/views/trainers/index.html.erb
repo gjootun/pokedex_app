@@ -1,0 +1,21 @@
+<h1>Trainers</h1>
+
+<%# Simple table of all trainers %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Hometown</th>
+      <th>Team size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @trainers.each do |trainer| %>
+      <tr>
+        <td><%= link_to trainer.name, trainer_path(trainer) %></td>
+        <td><%= trainer.hometown %></td>
+        <td><%= trainer.team_members.size %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,30 @@
+<h1>About</h1>
+
+<p>
+  Pokédex Team Builder lets you browse the first 151 Pokémon, filter them by type,
+  and see which fake trainers have them on their teams.
+</p>
+
+<h2 class="h4">Data sources</h2>
+<ul>
+  <li>
+    <strong>PokeAPI <code>/type</code></strong> (JSON): the 18 element types.
+    Stored in <code>element_types</code> (name).
+  </li>
+  <li>
+    <strong>PokeAPI <code>/pokemon</code></strong> (JSON): name, Pokédex number, height, weight,
+    base experience, sprite image and types. Stored in <code>pokemons</code>; the type list
+    fills the <code>typings</code> join table.
+  </li>
+  <li>
+    <strong>Faker gem</strong>: trainers (name, hometown) and their teams, stored in
+    <code>trainers</code> and <code>team_members</code> (nickname, level).
+  </li>
+</ul>
+
+<h2 class="h4">How the data is related</h2>
+<ul>
+  <li>Pokémon and types are many-to-many through <code>typings</code>.</li>
+  <li>Trainers and Pokémon are many-to-many through <code>team_members</code>.</li>
+  <li>A trainer has many team members (one-to-many).</li>
+</ul>

@@ -1,0 +1,14 @@
+<h1>Types</h1>
+
+<%# One card per type, linking to that type's page %>
+<div class="row row-cols-2 row-cols-md-6 g-3">
+  <% @element_types.each do |element_type| %>
+    <div class="col">
+      <div class="card text-center">
+        <div class="card-body">
+          <%= link_to element_type.name.capitalize, element_type_path(element_type), class: "stretched-link" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,42 @@
+<h1>Pokémon</h1>
+
+<%# Search form: text search + type dropdown. Uses GET so results are bookmarkable. %>
+<%= form_with url: pokemons_path, method: :get, class: "row g-2 mb-4" do |form| %>
+  <div class="col-12 col-md-5">
+    <%= form.label :q, "Name", class: "visually-hidden" %>
+    <%= form.text_field :q, value: params[:q], placeholder: "Search by name", class: "form-control" %>
+  </div>
+  <div class="col-12 col-md-4">
+    <%= form.label :element_type_id, "Type", class: "visually-hidden" %>
+    <%= form.select :element_type_id,
+                    options_from_collection_for_select(@element_types, :id, :name, params[:element_type_id]),
+                    { include_blank: "All types" }, class: "form-select" %>
+  </div>
+  <div class="col-12 col-md-3">
+    <%= form.submit "Search", name: nil, class: "btn btn-danger w-100" %>
+  </div>
+<% end %>
+
+<%# Show a message when the search finds nothing, otherwise the grid of cards %>
+<% if @pokemons.empty? %>
+  <p>No Pokémon match your search.</p>
+<% else %>
+  <div class="row row-cols-2 row-cols-md-4 g-3">
+    <% @pokemons.each do |pokemon| %>
+      <div class="col">
+        <div class="card text-center h-100">
+          <%= image_tag pokemon.image_url, alt: pokemon.name, class: "card-img-top" if pokemon.image_url.present? %>
+          <div class="card-body">
+            <p class="text-muted mb-0">#<%= pokemon.pokedex_number %></p>
+            <%= link_to pokemon.name.capitalize, pokemon_path(pokemon), class: "stretched-link" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Kaminari page links (keeps the search params) %>
+  <div class="mt-4">
+    <%= paginate @pokemons %>
+  </div>
+<% end %>

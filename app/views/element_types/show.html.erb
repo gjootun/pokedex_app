@@ -1,0 +1,18 @@
+<h1><%= @element_type.name.capitalize %> type</h1>
+<p><%= @pokemons.size %> Pokémon</p>
+
+<%# Every Pokémon of this type, each linking to its own page (and that page links back here) %>
+<div class="row row-cols-2 row-cols-md-6 g-3">
+  <% @pokemons.each do |pokemon| %>
+    <div class="col">
+      <div class="card text-center h-100">
+        <%= image_tag pokemon.image_url, alt: pokemon.name, class: "card-img-top" if pokemon.image_url.present? %>
+        <div class="card-body">
+          <%= link_to pokemon.name.capitalize, pokemon_path(pokemon), class: "stretched-link" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<p class="mt-4"><%= link_to "Back to all types", element_types_path %></p>
